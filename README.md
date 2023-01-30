@@ -1,18 +1,5 @@
 # EMPLOYEE TRACKER
-**Employee Tracker** is an application built using JS, MySQL, Json, prettier, bootstrap, express and node.js.
-
-
-## Images of the deployed website:
-***
-
-## Main Page
-[home page image]
-
-## Page 2
-[ page 2 image]
-
-## Page 3
-[ page 3 image]
+**Employee Tracker** is an Employee Tracker application built using JS, MySQL, Json, inquirer, prettier, express, dotenv and node.js.
 
 ## User Story
 ***
@@ -21,6 +8,7 @@ AS A business owner
 I WANT to be able to view and manage the departments, roles, and employees in my company
 SO THAT I can organize and plan my business
 ```
+<br>
 
 ## Acceptance Criteria
 
@@ -43,12 +31,15 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 ```
- 
-  ## Features
+ <br>
+
+  ## FEATURES
   ***
   
   Features of the deployed application and repository are as follows:
+  * The ability to add and remove employees from the "Employee Databse" as well as view thier department, roles and salary. 
 
+ <br>
 
   ## TECHNOLOGY USED
   ***
@@ -60,11 +51,38 @@ THEN I am prompted to select an employee to update and their new role and this i
     node.js
     prettier
  
+<br>
 
-## THE DEPLOYED REPO CAN BE FOUND AT THE FOLLOWING URL:
+## THE VIDEO WALKTHROUGH CAN BE FOUND HERE:
 ***
 
-[Deployed URL]
+<br>
+
+<a href="https://drive.google.com/file/d/1cRloSuHnuy-TH4UygXTBstVVjWaeUzaS/view">Click here to watch the walkthrough video!</a>
+
+<br>
+
+## Images of the completed application:
+***
+<br>
+
+## Screen shot of adding an Employee
+
+![Adding an Employee](images/Addinganemployee.png)
+
+<br>
+
+## Screen shot of Searching by Role
+
+![Searching by role](images/SearchingbyRole.png)
+
+<br>
+
+## Screen shot of adding an Department
+![Adding a Dept](images/AddingaDept.png)
+
+<br>
+
 
   ## INSTALLATION OF THE REPO FROM GITHUB
   ***
@@ -74,7 +92,8 @@ THEN I am prompted to select an employee to update and their new role and this i
     ```
     'git clone' + 'the repo link' + enter.
      
+<br>
 
-  ## FUTURE ITERATIONS
-  ***
-  **Future iterations**- 
+  ## License
+ - - -
+© 2022 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
