@@ -109,8 +109,7 @@ function searchEmployee() {
     ])
     .then(function (answer) {
       var fullEmployee = [];
-      var searchEmployee = [];
-
+  
       connection.query(query, function (err, res) {
         if (err) throw err;
 
@@ -120,14 +119,8 @@ function searchEmployee() {
             res[i].first_name === answer.firstName &&
             res[i].last_name === answer.lastName
           ) {
-            searchEmployee.push(res[i].id);
-            searchEmployee.push(res[i].first_name);
-            searchEmployee.push(res[i].last_name);
-            searchEmployee.push(res[i].title);
-            searchEmployee.push(res[i].salary);
-            searchEmployee.push(res[i].department_name);
 
-            fullEmployee.push(searchEmployee);
+            fullEmployee.push(res[i]);
           }
         }
 
@@ -146,7 +139,13 @@ function searchEmployee() {
 // Employee search by department
 function searchEmployee_Department() {
   var query =
-    "SELECT employee.id, first_name, last_name, title, salary, department_name FROM employee JOIN employee_role ON (employee.role_id = employee_role.id) JOIN department ON (department.id = employee_role.department_id)";
+    `SELECT employee.id, 
+    first_name, 
+    last_name, 
+    title,
+    salary, 
+    
+    department_name FROM employee JOIN employee_role ON (employee.role_id = employee_role.id) JOIN department ON (department.id = employee_role.department_id)`;
 
   connection.query("SELECT * FROM department", function (err, res) {
     if (err) throw err;
@@ -170,7 +169,6 @@ function searchEmployee_Department() {
       ])
       .then(function (answer) {
         var fullDepartment = [];
-        var searchDepartment = [];
 
         connection.query(query, function (err, res) {
           if (err) throw err;
@@ -178,14 +176,8 @@ function searchEmployee_Department() {
           // Employee search by department
           for (var i = 0; i < res.length; i++) {
             if (res[i].department_name === answer.departmentName) {
-              searchDepartment.push(res[i].id);
-              searchDepartment.push(res[i].first_name);
-              searchDepartment.push(res[i].last_name);
-              searchDepartment.push(res[i].title);
-              searchDepartment.push(res[i].salary);
-              searchDepartment.push(res[i].department_name);
-
-              fullDepartment.push(searchDepartment);
+        
+              fullDepartment.push(res[i]);
             }
           }
 
@@ -205,7 +197,13 @@ function searchEmployee_Department() {
 // Employee search by role
 function searchEmployee_Role() {
   var query =
-    "SELECT employee.id, first_name, last_name, title, salary, department_name FROM employee JOIN employee_role ON (employee.role_id = employee_role.id) JOIN department ON (department.id = employee_role.department_id)";
+    `SELECT employee.id, 
+     first_name,
+     last_name, 
+     title,
+     salary,
+    
+     department_name FROM employee JOIN employee_role ON (employee.role_id = employee_role.id) JOIN department ON (department.id = employee_role.department_id)`;
 
   connection.query("SELECT * FROM employee_role", function (err, res) {
     if (err) throw err;
@@ -219,19 +217,19 @@ function searchEmployee_Role() {
           type: "rawlist",
           message: "What is the role you would like to view?",
           choices: function () {
-            var Choices = [];
+            var choices = [];
 
-            for (var i = 0; i < res.length; i++) {
-              Choices.push(res[i].title);
-            }
+             choices = res.map(role => {
 
-            return Choices;
-          },
+            return role.title
+            })
+
+            return choices
+          }
         },
       ])
       .then(function (answer) {
         var fullRole = [];
-        var searchRole = [];
 
         connection.query(query, function (err, res) {
           if (err) throw err;
@@ -239,14 +237,8 @@ function searchEmployee_Role() {
           // Searches for employees by role
           for (var i = 0; i < res.length; i++) {
             if (res[i].title === answer.roleName) {
-              searchRole.push(res[i].id);
-              searchRole.push(res[i].first_name);
-              searchRole.push(res[i].last_name);
-              searchRole.push(res[i].title);
-              searchRole.push(res[i].salary);
-              searchRole.push(res[i].department_name);
 
-              fullRole.push(searchRole);
+              fullRole.push(res[i]);
             }
           }
 
@@ -265,7 +257,7 @@ function searchEmployee_Role() {
 
 // to add an employee to the database
 function addEmployee() {
-  connection.query("SELECT * FROM employee_role", function (err, result) {
+  connection.query("SELECT * FROM employee_role", function (err, res) {
     if (err) throw err;
 
     inquirer
@@ -285,13 +277,15 @@ function addEmployee() {
           type: "rawlist",
           message: "Enter the employee's role",
           choices: function () {
-            var Choices = [];
+           
+              var choices = [];
 
-            for (var i = 0; i < result.length; i++) {
-              Choices.push(result[i].title);
-            }
-
-            return Choices;
+              choices = res.map(role => {
+ 
+             return role.title
+             })
+ 
+             return choices
           },
         },
       ])
@@ -299,13 +293,13 @@ function addEmployee() {
         connection.query(
           "SELECT * FROM employee_role WHERE ?",
           { title: answer.roleChoice },
-          function (err, result) {
+          function (err, res) {
             if (err) throw err;
 
             connection.query("INSERT INTO employee SET ?", {
               first_name: answer.firstName,
               last_name: answer.lastName,
-              role_id: result[0].id,
+              role_id: res[0].id,
             });
 
             console.log("\n Employee added to database... \n");
@@ -373,7 +367,7 @@ function addDepartment() {
 
 // adding an employee's role
 function addRole() {
-  connection.query("SELECT * FROM department", function (err, result) {
+  connection.query("SELECT * FROM department", function (err, res) {
     if (err) throw err;
 
     inquirer
@@ -395,8 +389,8 @@ function addRole() {
           choices: function () {
             var Choices = [];
 
-            for (var i = 0; i < result.length; i++) {
-              Choices.push(result[i].department_name);
+            for (var i = 0; i < res.length; i++) {
+              Choices.push(res[i].department_name);
             }
 
             return Choices;
@@ -407,14 +401,14 @@ function addRole() {
         connection.query(
           "SELECT * FROM department WHERE ?",
           { department_name: answer.departmentChoice },
-          function (err, result) {
+          function (err, res) {
             if (err) throw err;
-            console.log(result[0].id);
+            console.log(res[0].id);
 
             connection.query("INSERT INTO employee_role SET ?", {
               title: answer.roleTitle,
               salary: parseInt(answer.roleSalary),
-              department_id: parseInt(result[0].id),
+              department_id: parseInt(res[0].id),
             });
 
             console.log("\n Role has been added to database... \n");
