@@ -391,7 +391,7 @@ function addDepartment() {
         }
       );
 
-      console.lo33g("\n Department added to database... \n");
+      console.log("\n Department added to database... \n");
 
       promptQuit();
     });
