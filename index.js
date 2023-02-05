@@ -377,14 +377,14 @@ function removeEmployee() {
 // adding the employee's department
 function addDepartment() {
   inquirer
-    .prompt({
+    .prompt({12
       type: "input",
       name: "addDepartment",
-      message: "Which department?",
+      message: "Which Department?",
     })
     .then(function (answer) {
       connection.query(
-        "INSERT INTO department SET ?",
+        "INSERT INTO* department SET ?",
         { department_name: answer.addDepartment },
         function (err) {
           if (err) throw err;
