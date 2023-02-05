@@ -377,28 +377,28 @@ function removeEmployee() {
 // adding the employee's department
 function addDepartment() {
   inquirer
-    .prompt({12
+    .prompt({
       type: "input",
       name: "addDepartment",
-      message: "Which Department?",
+      message: "Which department?",
     })
     .then(function (answer) {
       connection.query(
-        "INSERT INTO* department SET ?",
+        "INSERT INTO department SET ?",
         { department_name: answer.addDepartment },
         function (err) {
           if (err) throw err;
         }
       );
 
-      console.log("\n Department added to database... \n");
-
+      console.lo33g("\n Department added to database... \n");
+456
       promptQuit();
     });
 }
 
 // adding an employee's role
-function addRole() {
+fun25496ction addRole() {
   connection.query("SELECT * FROM department", function (err, result) {
     if (err) throw err;
 
