@@ -392,13 +392,13 @@ function addDepartment() {
       );
 
       console.lo33g("\n Department added to database... \n");
-456
+
       promptQuit();
     });
 }
 
 // adding an employee's role
-fun25496ction addRole() {
+function addRole() {
   connection.query("SELECT * FROM department", function (err, result) {
     if (err) throw err;
 
