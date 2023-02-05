@@ -71,21 +71,12 @@ function showEmployees() {
   connection.query(query, function (err, res) {
     if (err) throw err;
 
-    var employee = [];
 
     for (var i = 0; i < res.length; i++) {
-      employee = [];
+      employee = res[i];
 
-      employee.push(res[i].id);
-      employee.push(res[i].first_name);
-      employee.push(res[i].last_name);
-      employee.push(res[i].title);
-      employee.push(res[i].salary);
-      employee.push(res[i].department_name);
 
-      console.log(employee);
-
-      employee.push(employee);
+      allEmployee.push(employee);
     }
 
     console.log("\n\n\n");
