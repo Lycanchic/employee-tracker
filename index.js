@@ -1,26 +1,25 @@
 const mysql = require("mysql");
 const cTable = require("console.table");
 const inquirer = require("inquirer");
-require("dotenv").config()
+require("dotenv").config();
 
 var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
   password: process.env.DB_PASSWORD,
-  database: "employee_db"
+  database: "employee_db",
 });
 
 connection.connect(function (err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId);
-  
+
   // Starts the app
   runApp();
 });
 
 function runApp() {
- 
   // Question prompts
   inquirer
     .prompt({
@@ -40,42 +39,26 @@ function runApp() {
       ],
     })
     .then(function (answer) {
-      switch (answer.Questions) {
-        case "View All Employees":
-          showEmployees();
-          break;
-
-        case "Search an Employee":
-          searchEmployee();
-          break;
-
-        case "Search Employee by Department":
-          searchEmployee_Department();
-          break;
-
-        case "Search Employee by Role":
-          searchEmployee_Role();
-          break;
-
-        case "Add Employee":
-          addEmployee();
-          break;
-
-        case "Remove Employee":
-          removeEmployee();
-          break;
-
-        case "Add Department":
-          addDepartment();
-          break;
-
-        case "Add Role":
-          addRole();
-          break;
-        case "Quit":
-          connection.end();
-          break;
+      if (answer.Questions == "View All Employees") {
+        showEmployees();
       }
+
+      if (answer.Questions == "Search an Employee") searchEmployee();
+
+      if (answer.Questions == "Search Employee by Department")
+        searchEmployee_Department();
+
+      if (answer.Questions == "Search Employee by Role") searchEmployee_Role();
+
+      if (answer.Questions == "Add Employee") addEmployee();
+
+      if (answer.Questions == "Remove Employee") removeEmployee();
+
+      if (answer.Questions == "Add Department") addDepartment();
+
+      if (answer.Questions == "Add Role") addRole();
+
+      if (answer.Questions == "Quit") connection.end();
     });
 }
 
@@ -100,7 +83,7 @@ function showEmployees() {
       employee.push(res[i].salary);
       employee.push(res[i].department_name);
 
-       console.log(employee);
+      console.log(employee);
 
       employee.push(employee);
     }
@@ -169,7 +152,7 @@ function searchEmployee() {
     });
 }
 
- // Employee search by department
+// Employee search by department
 function searchEmployee_Department() {
   var query =
     "SELECT employee.id, first_name, last_name, title, salary, department_name FROM employee JOIN employee_role ON (employee.role_id = employee_role.id) JOIN department ON (department.id = employee_role.department_id)";
